@@ -2,6 +2,8 @@
 
 Proyecto en Python que busca los jugadores más parecidos a uno dado, usando todas las estadísticas numéricas de las cinco grandes ligas europeas. Tú eliges el jugador y la posición con la que compararlo.
 
+![Comparativa Olmo vs. Dybala](imagenes/olmo_dybala.png)
+
 ## Qué hace
 - Convierte los totales a "por 90 minutos" para comparar con justicia a jugadores con distintos minutos.
 - Usa todas las métricas numéricas disponibles, normalizadas con `StandardScaler`.
@@ -30,4 +32,4 @@ Ejemplo: jugador `Dani Olmo`, posición `FW` para ver qué delanteros se le pare
 - La etiqueta `MF` agrupa roles muy distintos (pivotes, interiores, mediapuntas).
 
 ## Autor
-Martín Peral Pozo
+Martin ([MartinPeral](https://github.com/MartinPeral))
