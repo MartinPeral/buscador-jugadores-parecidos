@@ -26,7 +26,7 @@ También puedes usar la versión de terminal con `python parecidos.py`.
 - `grafico.py`: gráficos comparativos entre dos jugadores.
 - `pruebas/`: scripts de los primeros pasos del aprendizaje.
 - `imagenes/`: gráficos generados.
-- `app.py`: web con Streamlit (selector de jugador, tabla de parecidos y gráfico comparativo).
+- `app.py`: web con Streamlit (selector de jugador, filtros por posición y liga, tabla de parecidos, gráfico de barras y radar)
 
 ## Limitaciones
 - Solo se incluyen jugadores con al menos 4 partidos de 90 minutos, y al inicio de temporada las métricas son muy inestables.
@@ -35,3 +35,5 @@ También puedes usar la versión de terminal con `python parecidos.py`.
 
 ## Autor
 Martin ([MartinPeral](https://github.com/MartinPeral))
+
+![Web](imagenes/web.png)
