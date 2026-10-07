@@ -14,17 +14,19 @@ Proyecto en Python que busca los jugadores más parecidos a uno dado, usando tod
 Dataset "Football Players Stats (2026-2027)" de Kaggle, con datos de FBref, descargado el 3 de octubre de 2026. No se incluye en este repositorio: descárgalo y guárdalo en la carpeta del proyecto como `players_data_light-2026_2027.csv`.
 
 ## Cómo ejecutarlo
-1. Instala las librerías: `pip install pandas matplotlib scikit-learn`
-2. Ejecuta `python parecidos.py`.
-3. Escribe el nombre exacto del jugador (como aparece en el CSV) y la posición a comparar.
+1. Instala las librerías: `pip install -r requirements.txt`
+2. Descarga el CSV (ver sección Datos) y guárdalo en la carpeta del proyecto.
+3. Lanza la web: `python -m streamlit run app.py`
+4. Elige el jugador, la posición con la que compararlo y el mínimo de partidos de 90 minutos.
 
-Ejemplo: jugador `Dani Olmo`, posición `FW` para ver qué delanteros se le parecen más.
+También puedes usar la versión de terminal con `python parecidos.py`.
 
 ## Estructura
 - `parecidos.py`: buscador principal.
 - `grafico.py`: gráficos comparativos entre dos jugadores.
 - `pruebas/`: scripts de los primeros pasos del aprendizaje.
 - `imagenes/`: gráficos generados.
+- `app.py`: web con Streamlit (selector de jugador, tabla de parecidos y gráfico comparativo).
 
 ## Limitaciones
 - Solo se incluyen jugadores con al menos 4 partidos de 90 minutos, y al inicio de temporada las métricas son muy inestables.
