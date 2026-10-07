@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 @st.cache_data
@@ -21,8 +23,14 @@ df, num = cargar(minimo)
 st.title("Buscador de jugadores parecidos")
 nombre = st.selectbox("Jugador", sorted(df["Player"].unique()))
 posicion = st.selectbox("Posición a comparar", ["FW", "MF", "DF"])
+ligas = sorted(df["Comp"].unique())
+elegidas = st.multiselect("Ligas con las que comparar", ligas, default=ligas)
 
-grupo = df["Pos"].str.contains(posicion, na=False) & (df["Player"] != nombre)
+grupo = df["Pos"].str.contains(posicion, na=False) & (df["Player"] != nombre) & df["Comp"].isin(elegidas)
+
+if grupo.sum() < 5:
+    st.warning("Hay menos de 5 jugadores con esos filtros. Amplía ligas o baja el mínimo de partidos.")
+    st.stop()
 scaler = StandardScaler().fit(num[grupo])
 modelo = NearestNeighbors(n_neighbors=5).fit(scaler.transform(num[grupo]))
 
@@ -40,3 +48,25 @@ comp.index = [nombre, df.loc[mas_parecido, "Player"]]
 
 st.subheader("Comparativa por 90 minutos")
 st.bar_chart(comp.T, stack=False, color=["#e63946", "#1d3557"])
+
+ref = num[grupo | (df.index == i)][metricas].rank(pct=True)
+valores_a = ref.loc[i].tolist()
+valores_b = ref.loc[mas_parecido].tolist()
+
+angulos = np.linspace(0, 2 * np.pi, len(metricas), endpoint=False).tolist()
+angulos += angulos[:1]
+valores_a += valores_a[:1]
+valores_b += valores_b[:1]
+
+fig, ax = plt.subplots(subplot_kw={"polar": True})
+ax.plot(angulos, valores_a, color="#e63946", label=nombre)
+ax.fill(angulos, valores_a, color="#e63946", alpha=0.25)
+ax.plot(angulos, valores_b, color="#1d3557", label=df.loc[mas_parecido, "Player"])
+ax.fill(angulos, valores_b, color="#1d3557", alpha=0.25)
+ax.set_xticks(angulos[:-1])
+ax.set_xticklabels(metricas)
+ax.set_ylim(0, 1)
+ax.legend(loc="upper right", bbox_to_anchor=(1.35, 1.1))
+
+st.subheader("Radar (percentil dentro del grupo comparado)")
+st.pyplot(fig)
